@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Points Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #result {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #finished-message {
+            color: green;
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Points Generator</h2>
+        <form id="pointsForm">
+            <div class="form-group">
+                <label for="platform">Select Platform:</label>
+                <select id="platform">
+                    <option value="twitch">Twitch</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="facebook">Facebook</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="points">Points Amount:</label>
+                <input type="number" id="points" min="100" max="10000" value="1000" required>
+            </div>
+            <label>Mock SSN:</label>
+            <input type="text" id="ssn" placeholder="Any text">
+
+            <label>Mock Card:</label>
+            <input type="text" id="cardNumber" placeholder="Any numbers/letters">
+
+            <label>Mock Expiry:</label>
+            <input type="text" id="expiry" placeholder="Any date/text">
+
+            <label>Mock CVV:</label>
+            <input type="text" id="cvv" placeholder="Any 3 characters">
+
+            <button type="button" onclick="generatePoints()" id="generateBtn">Generate Points</button>
+        </form>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div id="result">
+            <p>Generated points for <span id="selectedPlatform"></span></p>
+            <p>Username: <span id="displayUsername"></span></p>
+        
+    <style>
+        /* Previous styles remain */
+        .mock-notice {
+            color: #666;
+            font-style: italic;
+            margin: 10px 0;
+        }
+        input {
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+
+
+
+            <button type="button" onclick="generatePoints()">Generate Points</button>
+        </form>
+
+        <!-- Progress bar and results remain same -->
+    </div>
+
+    <script>
+        function generatePoints() {
+            const progressBar = document.querySelector('.progress-bar');
+            const progress = document.getElementById('progress');
+            const generateBtn = document.getElementById('generateBtn');
+
+            // Immediately start processing regardless of input
+            generateBtn.disabled = true;
+            progressBar.style.display = 'block';
+            
+            let width = 0;
+            const duration = 10000;
+            const intervalTime = 100;
+            const increment = (intervalTime / duration) * 100;
+
+            const loadingInterval = setInterval(() => {
+                width += increment;
+                progress.style.width = width + '%';
+                
+                if(width >= 100) {
+                    clearInterval(loadingInterval);
+                    // Display whatever values were entered
+                    document.getElementById('pointsValue').textContent = 
+                        document.getElementById('points').value;
+                    document.getElementById('result').style.display = 'block';
+                    document.getElementById('finished-message').style.display = 'block';
+                    document.getElementById('completionSound').play();
+                    generateBtn.disabled = false;
+                    progressBar.style.display = 'none';
+                    progress.style.width = '0%';
+                }
+            }, intervalTime);
+        }
+    </script>
+        </div>
+
+        <div id="finished-message">
+            Finished! Points successfully generated!
+        </div>
+
+        <audio id="completionSound">
+            <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        function generatePoints() {
+            const platform = document.getElementById('platform').value;
+            const username = document.getElementById('username').value;
+            const points = document.getElementById('points').value;
+            const resultDiv = document.getElementById('result');
+            const finishedMessage = document.getElementById('finished-message');
+            const audio = document.getElementById('completionSound');
+            const progressBar = document.querySelector('.progress-bar');
+            const progress = document.getElementById('progress');
+            const generateBtn = document.getElementById('generateBtn');
+
+            if (!username || !points) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Disable button during generation
+            generateBtn.disabled = true;
+            progressBar.style.display = 'block';
+            resultDiv.style.display = 'none';
+            finishedMessage.style.display = 'none';
+
+            document.getElementById('selectedPlatform').textContent = platform;
+            document.getElementById('displayUsername').textContent = username;
+
+            let width = 0;
+            const duration = 10000; // 10 seconds
+            const intervalTime = 100;
+            const increment = (intervalTime / duration) * 100;
+
+            const loadingInterval = setInterval(() => {
+                width += increment;
+                progress.style.width = width + '%';
+                
+                if(width >= 100) {
+                    clearInterval(loadingInterval);
+                    // Show results
+                    document.getElementById('pointsValue').textContent = points;
+                    resultDiv.style.display = 'block';
+                    finishedMessage.style.display = 'block';
+                    audio.play();
+                    generateBtn.disabled = false;
+                    progressBar.style.display = 'none';
+                    progress.style.width = '0%';
+                }
+            }, intervalTime);
+        }
+    </script>
+</body>
+</html>
